@@ -1,0 +1,40 @@
+packages:
+  - node/*
+  - express/*
+  - nest/*
+
+# One version of each shared dependency for the whole workspace.
+# Apps reference these as "catalog:" in their package.json.
+catalog:
+  # tooling
+  typescript: ^7.0.2
+  tsx: ^4.23.15
+  "@types/node": ^26.6.6
+  # express
+  express: ^5.3.0
+  cors: ^2.8.6
+  morgan: ^1.12.1
+  "@types/express": ^5.0.6
+  "@types/cors": ^2.8.19
+  "@types/morgan": ^1.9.10
+  # nest
+  "@nestjs/common": ^12.3.2
+  "@nestjs/core": ^12.3.2
+  "@nestjs/platform-express": ^12.3.2
+  "@nestjs/cli": ^12.0.11
+  reflect-metadata: ^0.2.2
+  rxjs: ^7.8.2
+  "@swc/core": ^1.16.20
+  "@swc/cli": ^0.8.2
+
+# Named catalogs override the default one for specific apps.
+catalogs:
+  # Nest CLI 12 needs the TypeScript programmatic compiler API, which TypeScript 7.0
+  # (native Go port) does not ship yet (expected back in 7.1). Nest apps stay on TS 6
+  # until then: reference it as "typescript": "catalog:nest".
+  nest:
+    typescript: ~6.0.3
+
+onlyBuiltDependencies:
+  - "@swc/core"
+  - esbuild

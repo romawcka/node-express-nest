@@ -1,0 +1,31 @@
+# Local dev databases. Start with `pnpm db:up`, stop with `pnpm db:down`.
+# Dev-only credentials — do not reuse anywhere real.
+services:
+  mongo:
+    image: mongo:8
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    volumes:
+      - mongo-data:/data/db
+
+  postgres:
+    image: postgres:18
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      # postgres 18+ keeps data in a versioned subdirectory of /var/lib/postgresql
+      - postgres-data:/var/lib/postgresql
+      # creates one database per implementation (runs only on first start with an empty volume)
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+volumes:
+  mongo-data:
+  postgres-data:

@@ -1,0 +1,25 @@
+# dependencies
+node_modules
+
+# build output
+dist
+*.tsbuildinfo
+
+# turbo
+.turbo
+
+# env (commit .env.example instead)
+.env
+.env.*
+!.env.example
+
+# temp file from atomic db.json writes
+*.tmp
+
+# logs & coverage
+*.log
+coverage
+
+# OS / editors
+.DS_Store
+.idea
