@@ -1,7 +1,7 @@
 @baseUrl = http://localhost:3201
 @path = tasks
 @existingId=be7a9b6d-a0f8-44bc-9f51-83b722b836da
-@updatedId=write here id for task to be updated
+@updatedId=497f673f-085a-46a1-87ed-5bb42e29c0ef
 @deletedId=write here id for task to be deleted
 
 ### List tasks
@@ -27,7 +27,7 @@ PATCH  {{baseUrl}}/{{path}}/{{updatedId}}
 Content-Type: application/json
 
 {
-  "title": "Task 3"
+"isCompleted": true
 }
 
 ### Delete a task

@@ -11,6 +11,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@rest/contract": "workspace:*",
     "cors": "catalog:",
     "express": "catalog:",
     "morgan": "catalog:"

@@ -60,7 +60,7 @@ export class FileTaskRepository implements TaskRepository {
       const task: Task = {
         id: randomUUID(),
         title: data.title,
-        isCompleted: data.isCompleted ?? false,
+        isCompleted: data.isCompleted,
       };
       tasks.push(task);
 

@@ -1,3 +1,4 @@
+import { CreateTaskSchema, UpdateTaskSchema } from "@rest/contract";
 import { Router } from "express";
 import type { TaskRepository } from "../repositories/task.repository.ts";
 
@@ -14,50 +15,38 @@ export const createTaskRouter = (tasks: TaskRepository) => {
     const task = await tasks.findById(id);
 
     if (!task) {
-      res.status(404).json({ message: `Task ${id} not found` });
-      return;
+      return res.status(404).json({ message: `Task ${id} not found` });
     }
 
     res.json({ task });
   });
 
   router.post("/", async (req, res) => {
-    const { title, isCompleted } = req.body ?? {};
+    const { data, success, error } = CreateTaskSchema.safeParse(req.body);
 
-    if (typeof title !== "string" || !title.trim()) {
-      res.status(400).json({ message: "title must be a non-empty string" });
-      return;
+    if (!success) {
+      const message = error.issues.map((issue) => issue.message).join("; ");
+      return res.status(400).json({ message });
     }
 
-    if (isCompleted !== undefined && typeof isCompleted !== "boolean") {
-      res.status(400).json({ message: "isCompleted must be a boolean" });
-      return;
-    }
-
-    const task = await tasks.create({ title, isCompleted });
+    const task = await tasks.create(data);
 
     res.status(201).json({ task });
   });
 
   router.patch("/:id", async (req, res) => {
     const { id } = req.params;
-    const { title, isCompleted } = req.body ?? {};
+    const { data, success, error } = UpdateTaskSchema.safeParse(req.body);
 
-    if (title !== undefined && (typeof title !== "string" || !title.trim())) {
-      res.status(400).json({ message: "title must be a non-empty string" });
-      return;
+    if (!success) {
+      const message = error.issues.map((issue) => issue.message).join("; ");
+      return res.status(400).json({ message });
     }
 
-    if (isCompleted !== undefined && typeof isCompleted !== "boolean") {
-      res.status(400).json({ message: "isCompleted must be a boolean" });
-      return;
-    }
-
-    const task = await tasks.update(id, { title, isCompleted });
+    const task = await tasks.update(id, data);
 
     if (!task) {
-      res.status(404).json({ message: `Task ${id} not found` });
-      return;
+      return res.status(404).json({ message: `Task ${id} not found` });
     }
 
     res.status(200).json({ task });
@@ -67,8 +56,7 @@ export const createTaskRouter = (tasks: TaskRepository) => {
     const { id } = req.params;
 
     if (!(await tasks.delete(id))) {
-      res.status(404).json({ message: `Task ${id} not found` });
-      return;
+      return res.status(404).json({ message: `Task ${id} not found` });
     }
 
     res.sendStatus(204);
