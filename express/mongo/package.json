@@ -1,5 +1,6 @@
 {
   "name": "rest-node-express-mongo",
+  "description": "Node/Express Rest API with mongo db",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -10,6 +11,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@rest/contract": "workspace:*",
+    "mongoose": "catalog:",
     "cors": "catalog:",
     "express": "catalog:",
     "morgan": "catalog:"

@@ -11,8 +11,10 @@ catalog:
   typescript: ^7.0.2
   tsx: ^4.23.15
   "@types/node": ^26.6.6
-  #validation
+  # validation
   zod: ^4.6.7
+  # database
+  mongoose: ^9.11.4
   # express
   express: ^5.3.0
   cors: ^2.8.6

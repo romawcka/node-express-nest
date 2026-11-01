@@ -1,0 +1,33 @@
+@baseUrl = http://localhost:3202
+@path = tasks
+@existingId=6ae78948616ecd9accd80c7e
+@updatedId=6ae7a07c7471ca0804f540e7
+@deletedId=6ae7a07c7471ca0804f540e7
+
+### List tasks
+GET {{baseUrl}}/{{path}}
+
+### Get task by id → 200
+GET {{baseUrl}}/{{path}}/{{existingId}}
+
+### Get task: missing id
+GET {{baseUrl}}/{{path}}/1
+
+### Create a new task
+POST {{baseUrl}}/{{path}}
+Content-Type: application/json
+
+{
+  "title": "Second task"
+}
+
+### Update a task
+PATCH  {{baseUrl}}/{{path}}/{{updatedId}}
+Content-Type: application/json
+
+{
+"isCompleted": true
+}
+
+### Delete a task
+DELETE  {{baseUrl}}/{{path}}/{{deletedId}}
