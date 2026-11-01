@@ -32,6 +32,6 @@ export const UpdateTaskSchema = TaskSchema.omit({ id: true })
     error: ONE_FIELD_REQUIRED,
   });
 
-export type Task = z.infer<typeof TaskSchema>;
+export type TaskDto = z.infer<typeof TaskSchema>;
 export type CreateTaskDto = z.infer<typeof CreateTaskSchema>;
 export type UpdateTaskDto = z.infer<typeof UpdateTaskSchema>;

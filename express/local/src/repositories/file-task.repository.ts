@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { readFile, rename, writeFile } from "node:fs/promises";
-import type { CreateTaskDto, Task, UpdateTaskDto } from "../types/task.type.ts";
+import type { CreateTaskDto, TaskDto, UpdateTaskDto } from "../types/task.type.ts";
 import type { TaskRepository } from "./task.repository.ts";
 
 export class FileTaskRepository implements TaskRepository {
@@ -11,7 +11,7 @@ export class FileTaskRepository implements TaskRepository {
     this.#file = file;
   }
 
-  async #read(): Promise<Task[]> {
+  async #read(): Promise<TaskDto[]> {
     try {
       const data = JSON.parse(await readFile(this.#file, "utf-8"));
 
@@ -28,13 +28,13 @@ export class FileTaskRepository implements TaskRepository {
     }
   }
 
-  async #write(tasks: Task[]) {
+  async #write(tasks: TaskDto[]) {
     const tmp = `${this.#file}.tmp`;
     await writeFile(tmp, JSON.stringify(tasks, null, 2) + "\n");
     await rename(tmp, this.#file);
   }
 
-  #mutate<T>(fn: (tasks: Task[]) => T): Promise<T> {
+  #mutate<T>(fn: (tasks: TaskDto[]) => T): Promise<T> {
     const run = this.#queue.then(async () => {
       const tasks = await this.#read();
       const result = fn(tasks);
@@ -57,7 +57,7 @@ export class FileTaskRepository implements TaskRepository {
 
   create(data: CreateTaskDto) {
     return this.#mutate((tasks) => {
-      const task: Task = {
+      const task: TaskDto = {
         id: randomUUID(),
         title: data.title,
         isCompleted: data.isCompleted,

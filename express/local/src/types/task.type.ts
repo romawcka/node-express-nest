@@ -1,1 +1,1 @@
-export type { CreateTaskDto, Task, UpdateTaskDto } from "@rest/contract";
+export type { CreateTaskDto, TaskDto, UpdateTaskDto } from "@rest/contract";
