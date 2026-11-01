@@ -1,6 +1,6 @@
 import type { Types } from "mongoose";
-import type { TaskDocument } from "../model/task.model.ts";
-import type { TaskDto } from "../types/task.type.ts";
+import type { TaskDocument } from "../models/task.model.ts";
+import type { TaskDto } from "@rest/contract";
 
 type TaskWithId = TaskDocument & { _id: Types.ObjectId };
 

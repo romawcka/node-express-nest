@@ -1,6 +1,6 @@
-import { config } from "./configs/config.ts";
+import { config } from "./config/app.config.ts";
 import { connectToDatabase } from "./db/mongoose.ts";
-import { app } from "./server.ts";
+import { app } from "./app.ts";
 
 const startServer = async () => {
   await connectToDatabase();

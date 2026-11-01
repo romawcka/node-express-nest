@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { readFile, rename, writeFile } from "node:fs/promises";
-import type { CreateTaskDto, TaskDto, UpdateTaskDto } from "../types/task.type.ts";
+import type { CreateTaskDto, TaskDto, UpdateTaskDto } from "@rest/contract";
 import type { TaskRepository } from "./task.repository.ts";
 
 export class FileTaskRepository implements TaskRepository {

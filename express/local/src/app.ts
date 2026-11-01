@@ -1,10 +1,12 @@
 import cors from "cors";
 import express from "express";
 import morgan from "morgan";
-import { config } from "./config/config.ts";
-import { errorHandler } from "./middlewares/error-handler.ts";
+
+import { config } from "./config/app.config.ts";
+import { errorHandler } from "./middlewares/error-handler.middleware.ts";
 import { FileTaskRepository } from "./repositories/file-task.repository.ts";
-import { healthRouter, taskRouter } from "./routes/_index.ts";
+import { createHealthRouter } from "./routes/health.router.ts";
+import { createTaskRouter } from "./routes/task.router.ts";
 
 export const app = express();
 
@@ -14,7 +16,7 @@ app.use(express.json());
 
 const taskRepository = new FileTaskRepository(config.db);
 
-app.use("/tasks", taskRouter(taskRepository));
-app.use(healthRouter);
+app.use("/tasks", createTaskRouter(taskRepository));
+app.use(createHealthRouter());
 app.use((_req, res) => res.status(404).json({ message: "Not found" }));
 app.use(errorHandler);

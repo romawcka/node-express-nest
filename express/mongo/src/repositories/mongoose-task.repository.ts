@@ -1,7 +1,7 @@
 import type { CreateTaskDto, UpdateTaskDto } from "@rest/contract";
 import { isObjectIdOrHexString } from "mongoose";
-import { toTaskDto } from "../helpers/task.helper.ts";
-import { TaskModel } from "../model/task.model.ts";
+import { toTaskDto } from "../mappers/task.mapper.ts";
+import { TaskModel } from "../models/task.model.ts";
 import type { TaskRepository } from "./task.repository.ts";
 
 export class MongooseTaskRepository implements TaskRepository {

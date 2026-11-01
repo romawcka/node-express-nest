@@ -2,10 +2,11 @@ import cors from "cors";
 import express from "express";
 import morgan from "morgan";
 
-import { isDatabaseConnected } from "./helpers/db.helper.ts";
+import { isDatabaseConnected } from "./db/mongoose.ts";
 import { errorHandler } from "./middlewares/error-handler.middleware.ts";
 import { MongooseTaskRepository } from "./repositories/mongoose-task.repository.ts";
-import { createHealthRouter, createTaskRouter } from "./routes/_index.ts";
+import { createHealthRouter } from "./routes/health.router.ts";
+import { createTaskRouter } from "./routes/task.router.ts";
 
 export const app = express();
 

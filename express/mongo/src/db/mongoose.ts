@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { config } from "../configs/config.ts";
+import { config } from "../config/app.config.ts";
 
 export const connectToDatabase = async () => {
   try {
@@ -10,3 +10,5 @@ export const connectToDatabase = async () => {
     process.exit(1);
   }
 };
+
+export const isDatabaseConnected = () => mongoose.connection.readyState === 1;
