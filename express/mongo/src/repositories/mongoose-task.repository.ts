@@ -1,8 +1,8 @@
-import type { CreateTaskDto, UpdateTaskDto } from "@rest/contract";
-import { isObjectIdOrHexString } from "mongoose";
-import { toTaskDto } from "../mappers/task.mapper.ts";
-import { TaskModel } from "../models/task.model.ts";
-import type { TaskRepository } from "./task.repository.ts";
+import type { CreateTaskDto, UpdateTaskDto } from '@rest/contract';
+import { isObjectIdOrHexString } from 'mongoose';
+import { toTaskDto } from '../mappers/task.mapper.ts';
+import { TaskModel } from '../models/task.model.ts';
+import type { TaskRepository } from './task.repository.ts';
 
 export class MongooseTaskRepository implements TaskRepository {
   async findAll() {
@@ -29,7 +29,7 @@ export class MongooseTaskRepository implements TaskRepository {
     if (!isObjectIdOrHexString(id)) return undefined;
 
     const task = await TaskModel.findByIdAndUpdate(id, data, {
-      returnDocument: "after",
+      returnDocument: 'after',
     }).lean();
 
     return task ? toTaskDto(task) : undefined;
