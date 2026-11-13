@@ -1,0 +1,57 @@
+@baseUrl = http://localhost:3203
+@path = tasks
+@existingId = 01a1d156-e573-7d24-9ec0-367287a04748
+@updatedId = 01a1d156-e573-7d24-9ec0-367287a04748
+@deletedId = 01a1d156-e573-7d24-9ec0-367287a04748
+@missingId = 019a0000-0000-7000-8000-000000000000
+
+### Health (db up/down)
+GET {{baseUrl}}/health
+
+### List tasks (newest first)
+GET {{baseUrl}}/{{path}}
+
+### Create a task → 201
+POST {{baseUrl}}/{{path}}
+Content-Type: application/json
+
+{
+  "title": "Second task"
+}
+
+### Create a task: invalid body → 400
+POST {{baseUrl}}/{{path}}
+Content-Type: application/json
+
+{
+  "title": ""
+}
+
+### Get task by id → 200
+GET {{baseUrl}}/{{path}}/{{existingId}}
+
+### Get task: not a uuid → 404
+GET {{baseUrl}}/{{path}}/1
+
+### Get task: valid uuid, no such row → 404
+GET {{baseUrl}}/{{path}}/{{missingId}}
+
+### Update a task: empty body → 400
+PATCH {{baseUrl}}/{{path}}/{{updatedId}}
+Content-Type: application/json
+
+{}
+
+### Update a task → 200
+PATCH {{baseUrl}}/{{path}}/{{updatedId}}
+Content-Type: application/json
+
+{
+  "isCompleted": true
+}
+
+### Delete a task → 204 (second time → 404)
+DELETE {{baseUrl}}/{{path}}/{{deletedId}}
+
+### Unknown route → JSON 404
+GET {{baseUrl}}/unknown

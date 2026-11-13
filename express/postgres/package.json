@@ -1,24 +1,34 @@
 {
   "name": "rest-node-express-postgres",
+  "description": "Node/Express Rest API with postgres db",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "tsx watch --env-file=.env src/index.ts",
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json",
     "start": "node --env-file=.env dist/index.js",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@rest/contract": "workspace:*",
     "cors": "catalog:",
+    "drizzle-orm": "catalog:",
     "express": "catalog:",
-    "morgan": "catalog:"
+    "morgan": "catalog:",
+    "pg": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@types/cors": "catalog:",
     "@types/express": "catalog:",
     "@types/morgan": "catalog:",
     "@types/node": "catalog:",
+    "@types/pg": "catalog:",
+    "drizzle-kit": "catalog:",
     "tsx": "catalog:",
     "typescript": "catalog:"
   }
