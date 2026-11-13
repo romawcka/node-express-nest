@@ -1,15 +1,13 @@
-import { CreateTaskSchema, UpdateTaskSchema } from "@rest/contract";
-import { Router } from "express";
-import type { TaskRepository } from "../repositories/task.repository.ts";
+import { CreateTaskSchema, UpdateTaskSchema } from '@rest/contract';
+import { Router } from 'express';
+import type { TaskRepository } from '../repositories/task.repository.ts';
 
 export const createTaskRouter = (tasks: TaskRepository) => {
   const router = Router();
 
-  router.get("/", async (_req, res) =>
-    res.json({ tasks: await tasks.findAll() }),
-  );
+  router.get('/', async (_req, res) => res.json({ tasks: await tasks.findAll() }));
 
-  router.get("/:id", async (req, res) => {
+  router.get('/:id', async (req, res) => {
     const { id } = req.params;
 
     const task = await tasks.findById(id);
@@ -21,11 +19,11 @@ export const createTaskRouter = (tasks: TaskRepository) => {
     res.json({ task });
   });
 
-  router.post("/", async (req, res) => {
+  router.post('/', async (req, res) => {
     const { data, success, error } = CreateTaskSchema.safeParse(req.body);
 
     if (!success) {
-      const message = error.issues.map((issue) => issue.message).join("; ");
+      const message = error.issues.map((issue) => issue.message).join('; ');
       return res.status(400).json({ message });
     }
 
@@ -34,12 +32,12 @@ export const createTaskRouter = (tasks: TaskRepository) => {
     res.status(201).json({ task });
   });
 
-  router.patch("/:id", async (req, res) => {
+  router.patch('/:id', async (req, res) => {
     const { id } = req.params;
     const { data, success, error } = UpdateTaskSchema.safeParse(req.body);
 
     if (!success) {
-      const message = error.issues.map((issue) => issue.message).join("; ");
+      const message = error.issues.map((issue) => issue.message).join('; ');
       return res.status(400).json({ message });
     }
 
@@ -52,7 +50,7 @@ export const createTaskRouter = (tasks: TaskRepository) => {
     res.status(200).json({ task });
   });
 
-  router.delete("/:id", async (req, res) => {
+  router.delete('/:id', async (req, res) => {
     const { id } = req.params;
 
     if (!(await tasks.delete(id))) {

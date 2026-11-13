@@ -1,7 +1,7 @@
-import { randomUUID } from "node:crypto";
-import { readFile, rename, writeFile } from "node:fs/promises";
-import type { CreateTaskDto, TaskDto, UpdateTaskDto } from "@rest/contract";
-import type { TaskRepository } from "./task.repository.ts";
+import type { CreateTaskDto, TaskDto, UpdateTaskDto } from '@rest/contract';
+import { randomUUID } from 'node:crypto';
+import { readFile, rename, writeFile } from 'node:fs/promises';
+import type { TaskRepository } from './task.repository.ts';
 
 export class FileTaskRepository implements TaskRepository {
   #file: string;
@@ -13,7 +13,7 @@ export class FileTaskRepository implements TaskRepository {
 
   async #read(): Promise<TaskDto[]> {
     try {
-      const data = JSON.parse(await readFile(this.#file, "utf-8"));
+      const data = JSON.parse(await readFile(this.#file, 'utf-8'));
 
       if (!Array.isArray(data)) {
         throw new Error(`${this.#file} must contain an array`);
@@ -21,7 +21,7 @@ export class FileTaskRepository implements TaskRepository {
 
       return data;
     } catch (err) {
-      if ((err as NodeJS.ErrnoException).code === "ENOENT") {
+      if ((err as NodeJS.ErrnoException).code === 'ENOENT') {
         return [];
       }
       throw err;
@@ -30,7 +30,7 @@ export class FileTaskRepository implements TaskRepository {
 
   async #write(tasks: TaskDto[]) {
     const tmp = `${this.#file}.tmp`;
-    await writeFile(tmp, JSON.stringify(tasks, null, 2) + "\n");
+    await writeFile(tmp, JSON.stringify(tasks, null, 2) + '\n');
     await rename(tmp, this.#file);
   }
 

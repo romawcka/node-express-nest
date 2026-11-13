@@ -1,4 +1,4 @@
-import type { CreateTaskDto, TaskDto, UpdateTaskDto } from "@rest/contract";
+import type { CreateTaskDto, TaskDto, UpdateTaskDto } from '@rest/contract';
 
 export interface TaskRepository {
   findAll(): Promise<TaskDto[]>;

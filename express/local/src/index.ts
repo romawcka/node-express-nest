@@ -1,5 +1,5 @@
-import { config } from "./config/app.config.ts";
-import { app } from "./app.ts";
+import { app } from './app.ts';
+import { config } from './configs/app.config.ts';
 
 app.listen(config.port, (err) => {
   if (err) {
