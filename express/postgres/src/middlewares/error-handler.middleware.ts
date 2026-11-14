@@ -1,7 +1,9 @@
 import type { ErrorRequestHandler } from 'express';
 
-export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
+export const errorHandler: ErrorRequestHandler = (err, _req, res, next) => {
   const status = err.status ?? 500;
+
+  if (res.headersSent) return next(err);
 
   if (status >= 500) {
     console.error(err);
