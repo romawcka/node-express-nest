@@ -10,7 +10,7 @@ const startServer = async () => {
       console.error(`Failed to start server: ${err.message}`);
       process.exit(1);
     }
-    console.log(`The server is running on port: ${config.port}`);
+    console.log(`Server is running on port: ${config.port}`);
   });
 
   const shutdown = () => {

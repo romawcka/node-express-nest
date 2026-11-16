@@ -3,12 +3,12 @@ import { sql } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { config } from '../configs/app.config.ts';
 
-const TIMEOUT_MLS = 5000;
+const TIMEOUT_ML = 5000;
 
 export const db = drizzle({
   connection: {
     connectionString: config.db,
-    connectionTimeoutMillis: TIMEOUT_MLS,
+    connectionTimeoutMillis: TIMEOUT_ML,
   },
   logger: true,
 });

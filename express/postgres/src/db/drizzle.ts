@@ -3,11 +3,11 @@ import { drizzle } from 'drizzle-orm/node-postgres';
 import { Pool } from 'pg';
 import { config } from '../configs/app.config.ts';
 
-const TIMEOUT_MLS = 5000;
+const TIMEOUT_ML = 5000;
 
 const pool = new Pool({
   connectionString: config.db,
-  connectionTimeoutMillis: TIMEOUT_MLS,
+  connectionTimeoutMillis: TIMEOUT_ML,
 });
 
 pool.on('error', (error) => console.error('Unexpected error on idle database client', error));
@@ -17,7 +17,7 @@ export const db = drizzle({ client: pool, logger: true });
 export const connectToDatabase = async () => {
   try {
     await db.execute(sql`select 1`);
-    console.log('Connected to Database');
+    console.log('Connected to database');
   } catch (err) {
     const reason = err instanceof Error && err.cause ? err.cause : err;
     console.error('Failed to connect to database:', reason);
