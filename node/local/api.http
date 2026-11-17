@@ -1,0 +1,94 @@
+@baseUrl = http://localhost:3101
+@path = tasks
+@existingId = 99cfc33a-b58b-4dd3-9727-a791258ce9f5
+@updatedId = 7a546299-a120-4d1a-8cac-956844d5ef90
+@deletedId = 6cbc81a1-43b2-4565-ba5a-d6feaa6a8b96
+@missingId = 00000000-0000-4000-8000-000000000000
+
+### Health
+GET {{baseUrl}}/health
+
+### List tasks
+GET {{baseUrl}}/{{path}}
+
+### Create a task → 201
+POST {{baseUrl}}/{{path}}
+Content-Type: application/json
+
+{
+  "title": "Third task"
+}
+
+### Create a task: invalid body → 400
+POST {{baseUrl}}/{{path}}
+Content-Type: application/json
+
+{
+  "title": ""
+}
+
+### Create a task: broken JSON → 400
+POST {{baseUrl}}/{{path}}
+Content-Type: application/json
+
+{ "title":
+
+### Create a task: wrong Content-Type → 415
+POST {{baseUrl}}/{{path}}
+Content-Type: text/plain
+
+{ "title": "Plain text" }
+
+### Create a task: body over 100kb → 413
+# create the file first, delete it afterwards:
+# node -e "process.stdout.write(JSON.stringify({ title: 'x'.repeat(200_000) }))" > big.json
+POST {{baseUrl}}/{{path}}
+Content-Type: application/json
+
+< ./big.json
+
+### Get task by id → 200
+GET {{baseUrl}}/{{path}}/{{existingId}}
+
+### Get task: not a uuid → 404
+GET {{baseUrl}}/{{path}}/1
+
+### Get task: valid uuid, no such task → 404
+GET {{baseUrl}}/{{path}}/{{missingId}}
+
+### Get task: malformed percent-encoding → 400
+GET {{baseUrl}}/{{path}}/%E0%A4%A
+
+### Update a task: empty body → 400
+PATCH {{baseUrl}}/{{path}}/{{updatedId}}
+Content-Type: application/json
+
+{}
+
+### Update a task → 200
+PATCH {{baseUrl}}/{{path}}/{{updatedId}}
+Content-Type: application/json
+
+{
+  "isCompleted": false
+}
+
+### Delete a task → 204 (second time → 404)
+DELETE {{baseUrl}}/{{path}}/{{deletedId}}
+
+### Wrong method on an existing path → 404 (405 + Allow with the step 6 extension)
+PUT {{baseUrl}}/{{path}}/{{existingId}}
+Content-Type: application/json
+
+{
+  "title": "PUT is not supported"
+}
+
+### CORS preflight → 204
+OPTIONS {{baseUrl}}/{{path}}
+Origin: http://localhost:5173
+Access-Control-Request-Method: PATCH
+Access-Control-Request-Headers: content-type
+
+### Unknown route → JSON 404
+GET {{baseUrl}}/unknown
