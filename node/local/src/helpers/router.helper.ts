@@ -5,11 +5,11 @@ export type Method = 'GET' | 'POST' | 'PATCH' | 'DELETE';
 
 export type Handler = (req: IncomingMessage, res: ServerResponse) => boolean | Promise<boolean>;
 
-export type Route = {
+export interface Route {
   method: Method;
   path: string; // for example, '/tasks/:id'
   handler: (req: IncomingMessage, res: ServerResponse, ...params: string[]) => unknown;
-};
+}
 
 // matchPath('/tasks/:id', '/tasks/abc') → ['abc']; do not match → undefined.
 const matchPath = (pattern: string, pathname: string) => {
@@ -41,8 +41,9 @@ const decode = (value: string) => {
   }
 };
 
-export const createRouter = (routes: Route[]): Handler => {
-  return async (req, res) => {
+export const createRouter =
+  (routes: Route[]): Handler =>
+  async (req, res) => {
     const { pathname } = new URL(req.url ?? '/', 'http://localhost');
 
     for (const route of routes) {
@@ -58,4 +59,3 @@ export const createRouter = (routes: Route[]): Handler => {
 
     return false;
   };
-};
