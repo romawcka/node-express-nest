@@ -1,5 +1,6 @@
 {
   "name": "rest-node-mongo",
+  "description": "Node Vanilla Rest API with mongo db",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -8,6 +9,10 @@
     "build": "tsc",
     "start": "node --env-file=.env dist/index.js",
     "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@rest/contract": "workspace:*",
+    "mongoose": "catalog:"
   },
   "devDependencies": {
     "@types/node": "catalog:",

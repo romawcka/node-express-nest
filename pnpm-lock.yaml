@@ -330,6 +330,13 @@ importers:
         version: 7.0.2
 
   node/mongo:
+    dependencies:
+      '@rest/contract':
+        specifier: workspace:*
+        version: link:../../packages/contract
+      mongoose:
+        specifier: 'catalog:'
+        version: 9.11.4
     devDependencies:
       '@types/node':
         specifier: 'catalog:'

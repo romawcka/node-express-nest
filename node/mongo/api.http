@@ -1,0 +1,26 @@
+@baseUrl = http://localhost:3102
+@path = tasks
+@taskId = {{createTask.response.body.task.id}}
+
+### Create a task → 201
+# @name createTask
+POST {{baseUrl}}/{{path}}
+Content-Type: application/json
+
+{
+  "title": "First task"
+}
+
+### Get task by id → 200
+GET {{baseUrl}}/{{path}}/{{taskId}}
+
+### Update a task → 200
+PATCH {{baseUrl}}/{{path}}/{{taskId}}
+Content-Type: application/json
+
+{
+  "isCompleted": true
+}
+
+### Delete a task → 204 (second time → 404)
+DELETE {{baseUrl}}/{{path}}/{{taskId}}
